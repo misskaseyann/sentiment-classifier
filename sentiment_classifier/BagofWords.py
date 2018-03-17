@@ -1,4 +1,5 @@
 import os
+import numpy as np
 
 
 class BagofWords(object):
@@ -37,11 +38,10 @@ class BagofWords(object):
             #  Add the words list to a larger list.
             self.totaldata.append(words)
 
-        print("*  all data processed.")
+        print("*  all data processed")
 
-        print("*  making vocab.")
+        print("*  making vocab")
         self.vocab()
-        print("* done with vocab.")
 
     def tokenize(self, file):
         #  Remove the html tags.
@@ -98,17 +98,30 @@ class BagofWords(object):
                     self.vocabulary[word] += 1
                 else:
                     self.vocabulary[word] = 1
+        print(self.vocabulary)
+        print(self.wordcount)
 
-    def reset(self, fp, stopfp, ngrams):
+    def vectorize(self, data):
+        print("*  vectorizing data")
+        wordvec = np.zeros((len(data), len(self.vocabulary)))
+        count = 0
+        keys = list(self.vocabulary.keys())
+        for chunk in data:
+            for word in chunk:
+                wordvec[count][keys.index(word)] += 1
+            count += 1
+        return wordvec
+
+
+    def set_fp(self, fp):
         self.fp = fp
-        self.stopfp = stopfp
-        self.ngrams = ngrams
         self.totaldata = []
-        self.vocabulary = {}
-        self.wordcount = 0
 
     def get_vocabulary(self):
         return self.vocabulary
 
     def get_wordcount(self):
         return self.vocabulary
+
+    def get_processed_data(self):
+        return self.totaldata
