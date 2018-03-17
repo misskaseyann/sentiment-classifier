@@ -25,6 +25,8 @@ class BagofWords(object):
             print(file)
             file = self.tokenize(file)
             words = file.split(' ')
+            if self.ngrams > 1:
+                words = self.split_ngrams(words)
             words = self.stopwords(words, stoplist)
             #  Split up the words.
             print("Modified file:")
@@ -59,3 +61,20 @@ class BagofWords(object):
                 if item == word:
                     wordlist.remove(item)
         return wordlist
+
+    def split_ngrams(self, words):
+        wordsnew = []
+        x = 0
+        nwords = ''
+        for word in words:
+            if x == self.ngrams - 1:
+                nwords = nwords + word
+                x = x + 1
+            elif x < self.ngrams:
+                nwords =  nwords + word + ' '
+                x = x + 1
+            else:
+                wordsnew.append(nwords)
+                nwords = word + ' '
+                x = 1
+        return wordsnew
