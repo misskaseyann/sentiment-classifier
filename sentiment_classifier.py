@@ -16,3 +16,10 @@ if __name__ == "__main__":
 
     classify = Classifier(negdata, posdata, negvec, posvec)
     classify.learn()
+
+    #  test this.
+    bow.set_fp("data/test1/test/")
+    bow.read()
+    testdata = bow.get_processed_data()
+    testvec = bow.vectorize(testdata)
+    classify.predict(testvec)

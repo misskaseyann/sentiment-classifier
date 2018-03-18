@@ -40,4 +40,18 @@ class Classifier(object):
             occur.append(sum)
         return occur
 
-    #def predict(self):
+    def predict(self, docs):
+        for i in range(len(docs)):
+            predictpos = self.priorpos
+            predictneg = self.priorneg
+            for x in range(len(docs[0])):
+                num = docs[i][x]
+                if num != 0 and x < len(self.condpos):
+                    predictpos *= self.condpos[x]
+                    predictneg *= self.condneg[x]
+            print("*")
+            print("Document # %d" % (i + 1))
+            if predictpos > predictneg:
+                print("--> POSITIVE sentiment")
+            else:
+                print("--> NEGATIVE sentiment")
