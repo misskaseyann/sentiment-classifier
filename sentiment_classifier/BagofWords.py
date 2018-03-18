@@ -98,18 +98,20 @@ class BagofWords(object):
                     self.vocabulary[word] += 1
                 else:
                     self.vocabulary[word] = 1
-        print(self.vocabulary)
-        print(self.wordcount)
 
     def vectorize(self, data):
         print("*  vectorizing data")
         wordvec = np.zeros((len(data), len(self.vocabulary)))
         count = 0
         keys = list(self.vocabulary.keys())
+        print("size :")
+        print(len(keys))
         for chunk in data:
             for word in chunk:
                 wordvec[count][keys.index(word)] += 1
             count += 1
+        print("word vec")
+        print(wordvec)
         return wordvec
 
 
@@ -121,7 +123,13 @@ class BagofWords(object):
         return self.vocabulary
 
     def get_wordcount(self):
-        return self.vocabulary
+        return self.wordcount
+
+    def get_vocabsize(self):
+        return len(list(self.vocabulary.keys()))
+
+    def get_vocab_freq(self):
+        return list(self.vocabulary.values())
 
     def get_processed_data(self):
         return self.totaldata

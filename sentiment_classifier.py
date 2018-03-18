@@ -1,4 +1,5 @@
 from sentiment_classifier.BagofWords import BagofWords
+from sentiment_classifier.Classifier import Classifier
 
 if __name__ == "__main__":
     print("*  negative data processing")
@@ -12,3 +13,6 @@ if __name__ == "__main__":
 
     negvec = bow.vectorize(negdata)
     posvec = bow.vectorize(posdata)
+
+    classify = Classifier(negdata, posdata, negvec, posvec)
+    classify.learn()
